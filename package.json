@@ -1,0 +1,36 @@
+{
+  "name": "museum-curator",
+  "version": "0.1.0",
+  "private": true,
+  "main": "main/main.js",
+  "author": "Maria Hristova",
+  "scripts": {
+    "dev:next": "next dev",
+    "dev:electron": "wait-on http://localhost:3000 && electron .",
+    "dev": "concurrently \"npm run dev:next\" \"npm run dev:electron\"",
+    "build": "next build && electron-builder",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "electron-serve": "^2.1.1",
+    "next": "15.5.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "concurrently": "^9.2.0",
+    "electron": "^37.3.1",
+    "electron-builder": "^26.0.12",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.0",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "wait-on": "^8.0.4"
+  }
+}
