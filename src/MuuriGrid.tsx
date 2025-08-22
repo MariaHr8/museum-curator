@@ -3,26 +3,40 @@ import { MuuriComponent } from "muuri-react";
 import { generateItems, options } from "./utils";
 
 const MuuriGrid = () => {
-  const [items, setItems] = useState(generateItems());
+  type GridItem = {
+    id: string | number;
+    color: string;
+    title: string;
+    width: number;
+    height: number;
+  };
 
-  const children = items.map(({ id, color, title, width, height }) => (
-    <Item
-      key={id}
-      color={color}
-      title={title}
-      width={width}
-      height={height}
-      remove={() => setItems(items.filter((item) => item.id !== id))}
-    />
-  ));
+  const [items, setItems] = useState<GridItem[]>(generateItems());
+
+  const children = items.map(
+    ({ id, color, title, width, height }: GridItem) => (
+      <Item
+        key={id}
+        color={color}
+        title={title}
+        width={width}
+        height={height}
+        remove={() =>
+          setItems(items.filter((item: GridItem) => item.id !== id))
+        }
+      />
+    )
+  );
 
   return (
-    <MuuriComponent
-      {...options}
-      propsToData={({ color, title }) => ({ color, title })}
-    >
-      {children}
-    </MuuriComponent>
+    <div className="bg-red-700">
+      <MuuriComponent
+        {...options}
+        propsToData={({ color, title }) => ({ color, title })}
+      >
+        {children}
+      </MuuriComponent>
+    </div>
   );
 };
 

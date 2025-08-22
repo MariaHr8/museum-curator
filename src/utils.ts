@@ -1,21 +1,5 @@
-import { useCallback } from "react";
-
-// Return the filter method.
-export function useFilter(value, search) {
-  return useCallback(
-    function (data) {
-      var isSearchMatch = !search
-        ? true
-        : data.title.toLowerCase().indexOf(search) > -1;
-      var isFilterMatch = value === "all" ? true : data.color === value;
-      return isSearchMatch && isFilterMatch;
-    },
-    [value, search]
-  );
-}
-
 // Return one of the values of the array.
-export function oneOf(array) {
+export function oneOf(array: string | any[]) {
   return array[Math.floor(Math.random() * Math.floor(array.length))];
 }
 
@@ -41,21 +25,21 @@ export function generateItems() {
 // Grid static options.
 export const options = {
   dragSortHeuristics: {
-    sortInterval: 20
+    sortInterval: 20,
   },
   layoutDuration: 400,
   dragRelease: {
     duration: 400,
-    easing: "ease-out"
+    easing: "ease-out",
   },
   dragEnabled: true,
   dragContainer: document.body,
   // The placeholder of an item that is being dragged.
   dragPlaceholder: {
     enabled: true,
-    createElement: function (item) {
+    createElement: function (item: any) {
       // The element will have the Css class ".muuri-item-placeholder".
       return item.getElement().cloneNode(true);
-    }
-  }
+    },
+  },
 };
