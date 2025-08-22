@@ -1,28 +1,54 @@
-import { useEffect, useRef } from "react";
-import Muuri from "muuri";
-// import "./MuuriGrid.css";
+import { useState } from "react";
+import { MuuriComponent } from "muuri-react";
+import { generateItems, options } from "./utils";
 
 const MuuriGrid = () => {
-  const gridRef = useRef<HTMLDivElement | null>(null);
+  const [items, setItems] = useState(generateItems());
 
-  useEffect(() => {
-    if (!gridRef.current) return;
-    const grid = new Muuri(gridRef.current, { dragEnabled: true });
-
-    return () => {
-      grid.destroy();
-    };
-  }, []);
+  const children = items.map(({ id, color, title, width, height }) => (
+    <Item
+      key={id}
+      color={color}
+      title={title}
+      width={width}
+      height={height}
+      remove={() => setItems(items.filter((item) => item.id !== id))}
+    />
+  ));
 
   return (
-    <div ref={gridRef} className="grid">
-      {[...Array(6)].map((_, i) => (
-        <div key={i} className="item">
-          <div className="item-content">Item {i + 1}</div>
-        </div>
-      ))}
-    </div>
+    <MuuriComponent
+      {...options}
+      propsToData={({ color, title }) => ({ color, title })}
+    >
+      {children}
+    </MuuriComponent>
   );
 };
 
 export default MuuriGrid;
+
+type ItemProps = {
+  color: string;
+  width: number;
+  height: number;
+  title: string;
+  remove: () => void;
+};
+
+const Item = ({ color, width, height, title, remove }: ItemProps) => {
+  return (
+    <div className={`item h${height} w${width} ${color}`}>
+      <div className="item-content">
+        <div className="card">
+          <div className="card-title">{title}</div>
+          <div className="card-remove">
+            <i className="material-icons" onMouseDown={remove}>
+              &#xE5CD;
+            </i>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
