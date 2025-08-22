@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { MuuriComponent } from "muuri-react";
-import { generateItems, options } from "./utils";
+import { generateItems } from "./utils";
+import { ResizableWrapper } from "./ResizableWrapper";
 
 const MuuriGrid = () => {
   type GridItem = {
@@ -10,29 +11,23 @@ const MuuriGrid = () => {
     width: number;
     height: number;
   };
+  const [items, setItems] = useState(generateItems());
 
-  const [items, setItems] = useState<GridItem[]>(generateItems());
-
-  const children = items.map(
-    ({ id, color, title, width, height }: GridItem) => (
-      <Item
-        key={id}
-        color={color}
-        title={title}
-        width={width}
-        height={height}
-        remove={() =>
-          setItems(items.filter((item: GridItem) => item.id !== id))
-        }
-      />
-    )
-  );
+  // Children.
+  const children = items.map(({ id, color }) => (
+    <Item
+      key={id}
+      color={color}
+      remove={() => setItems(items.filter((item: GridItem) => item.id !== id))}
+    />
+  ));
 
   return (
-    <div className="bg-red-700">
+    <div>
+      {/* Content */}
       <MuuriComponent
-        {...options}
-        propsToData={({ color, title }) => ({ color, title })}
+        dragEnabled
+        dragStartPredicate={{ handle: ".content-header" }}
       >
         {children}
       </MuuriComponent>
@@ -42,27 +37,20 @@ const MuuriGrid = () => {
 
 export default MuuriGrid;
 
-type ItemProps = {
-  color: string;
-  width: number;
-  height: number;
-  title: string;
-  remove: () => void;
-};
-
-const Item = ({ color, width, height, title, remove }: ItemProps) => {
-  return (
-    <div className={`item h${height} w${width} ${color}`}>
-      <div className="item-content">
-        <div className="card">
-          <div className="card-title">{title}</div>
-          <div className="card-remove">
-            <i className="material-icons" onMouseDown={remove}>
-              &#xE5CD;
-            </i>
-          </div>
-        </div>
+// Item component.
+const Item = ResizableWrapper(
+  ({ color, remove }) => (
+    <div className={`content ${color}`}>
+      <div className="content-header" />
+      <div className="card-remove">
+        <i className="material-icons" onMouseDown={remove}>
+          &#xE5CD;
+        </i>
       </div>
     </div>
-  );
-};
+  ),
+  {
+    width: 100,
+    height: 100,
+  }
+);

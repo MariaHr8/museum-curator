@@ -5,6 +5,7 @@ function App() {
     <div>
       <h1>Gallery Curator</h1>
       <MuuriGrid />
+      
     </div>
   );
 }

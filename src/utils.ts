@@ -7,16 +7,11 @@ let uuid = 3;
 // Generate 3 items.
 export function generateItems() {
   const items = [];
-  for (let i = 0; i < 10; i++) {
-    const color = oneOf(["red", "green", "blue"]);
-    const width = oneOf([1, 2]);
-    const height = oneOf([1, 2]);
-
-    const alphabet = "abcdefghijklmnopqrstuvwxyz";
-    const title = oneOf(alphabet) + oneOf(alphabet);
+  for (let i = 0; i < 7; i++) {
+    const color = oneOf(["orange", "green", "blue"]);
     const id = uuid++;
 
-    items.push({ id, color, width, height, title });
+    items.push({ id, color });
   }
 
   return items;
