@@ -2,7 +2,7 @@ import MuuriGrid from "./MuuriGrid";
 
 function App() {
   return (
-    <div>
+    <div className="">
       <h1>Gallery Curator</h1>
       <MuuriGrid />
       

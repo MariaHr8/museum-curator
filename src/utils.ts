@@ -10,8 +10,14 @@ export function generateItems() {
   for (let i = 0; i < 7; i++) {
     const color = oneOf(["orange", "green", "blue"]);
     const id = uuid++;
+    const url = oneOf([
+      "https://i.pinimg.com/400x300/0d/f6/f1/0df6f1f0bfe7aaca849c1bbc3607a34b.jpg",
+      "https://i.pinimg.com/600x/0d/f6/f1/0df6f1f0bfe7aaca849c1bbc3607a34b.jpg",
+      "https://i.pinimg.com/1200x/0d/f6/f1/0df6f1f0bfe7aaca849c1bbc3607a34b.jpg",
+    ]);
+      ;
 
-    items.push({ id, color });
+    items.push({ id, color, url });
   }
 
   return items;
