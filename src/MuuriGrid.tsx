@@ -14,12 +14,13 @@ const MuuriGrid = () => {
   const [items, setItems] = useState(generateItems());
 
   // Children.
-  const children = items.map(({ id, color, url }) => (
+  const children = items.map(({ id, color, url, frameUrl }) => (
     <Item
       key={id}
       color={color}
       remove={() => setItems(items.filter((item: GridItem) => item.id !== id))}
       url={url}
+      frameUrl={frameUrl}
     />
   ));
 
@@ -28,7 +29,7 @@ const MuuriGrid = () => {
       {/* Content */}
       <MuuriComponent
         dragEnabled
-        dragStartPredicate={{ handle: ".content-header" }}
+        dragStartPredicate={{ handle: ".frame-wrapper" }}
       >
         {children}
       </MuuriComponent>
@@ -40,16 +41,17 @@ export default MuuriGrid;
 
 // Item component.
 const Item = ResizableWrapper(
-  ({ color, remove, url }) => (
+  ({ color, remove, url, frameUrl }) => (
     <div className={`content ${color}`}>
-      <div className="content-header" />
       <div className="card-remove">
         <i className="material-icons" onMouseDown={remove}>
           &#xE5CD;
         </i>
       </div>
-      <div className="image-holder">
-        <img src={url} alt="" className="z-[-1]" />
+
+      <div className="frame-wrapper">
+        <img src={url} alt="" className="image" />
+        <img src={frameUrl} alt="frame" className="frame-overlay" />
       </div>
     </div>
   ),
