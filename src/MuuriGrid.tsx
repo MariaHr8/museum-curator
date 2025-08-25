@@ -14,13 +14,15 @@ const MuuriGrid = () => {
   const [items, setItems] = useState(generateItems());
 
   // Children.
-  const children = items.map(({ id, color, url, frameUrl }) => (
+  const children = items.map(({ id, color, url, frameUrl, height, width }) => (
     <Item
       key={id}
       color={color}
       remove={() => setItems(items.filter((item: GridItem) => item.id !== id))}
       url={url}
       frameUrl={frameUrl}
+      width={width}
+      height={height}
     />
   ));
 
@@ -38,25 +40,18 @@ const MuuriGrid = () => {
 };
 
 export default MuuriGrid;
-
-// Item component.
-const Item = ResizableWrapper(
-  ({ color, remove, url, frameUrl }) => (
+const Item = ({ color, remove, url, frameUrl, height, width }) => (
+  <ResizableWrapper width={width} height={height}>
     <div className={`content ${color}`}>
       <div className="card-remove">
         <i className="material-icons" onMouseDown={remove}>
           &#xE5CD;
         </i>
       </div>
-
       <div className="frame-wrapper">
         <img src={url} alt="" className="image" />
         <img src={frameUrl} alt="frame" className="frame-overlay" />
       </div>
     </div>
-  ),
-  {
-    width: 100,
-    height: 100,
-  }
+  </ResizableWrapper>
 );
