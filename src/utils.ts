@@ -2,7 +2,7 @@ import frame1 from "./assets/frames/frame1.png";
 import frame3 from "./assets/frames/frame3.png";
 import frame4 from "./assets/frames/frame4.png";
 
-const BASE_WIDTH = 500;
+const BASE_WIDTH = 100;
 
 // Return one of the values of the array.
 export function oneOf(array: string | any[]) {
@@ -34,9 +34,9 @@ export function generateItems() {
     const url = picture.url;
     const width = oneOf([
       BASE_WIDTH,
+      BASE_WIDTH * 1.25,
       BASE_WIDTH * 1.5,
-      BASE_WIDTH * 2,
-      BASE_WIDTH * 2.5,
+      BASE_WIDTH * 1.75,
     ]);
     const height = Math.round(width / picture.ratio);
     const frameUrl = oneOf([frame1, frame3, frame4]);

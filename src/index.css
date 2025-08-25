@@ -748,3 +748,14 @@ section h4 {
   direction: ltr;
   -webkit-font-smoothing: antialiased;
 }
+
+.button-div{
+  width: 100%;
+  display: flex;
+  justify-content: center;  
+}
+
+.generate-button {
+  margin-bottom: 30px;
+  align-self: center;
+}
