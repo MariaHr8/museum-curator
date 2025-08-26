@@ -44,6 +44,8 @@ export function generateItems() {
     items.push({ id, color, url, frameUrl, height, width });
   }
 
+  console.log("Item", items[0]);
+
   return items;
 }
 
