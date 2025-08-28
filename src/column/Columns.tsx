@@ -47,7 +47,7 @@ export const Columns = () => {
             toId: "ACTIVE",
           }),
       };
-      return <Item item={item3} key={item.id} />;
+      return <ColumnItem item={item3} key={item.id} />;
     }),
   };
 
@@ -80,12 +80,12 @@ export const Columns = () => {
 };
 
 // Item component.
-const Item = React.memo(({ item, onSend }) => {
-  const [tag] = useState(getRandomWord());
-  const grid = useGrid();
-  const gridId = (grid?.id ?? "").toLowerCase(); // safe
+const Item = React.memo(({ item }) => {
+  if (item.color === "hidden") {
+    item.height = 100;
+    item.width = 100;
+  }
 
-  console.log(item.onSend);
   return (
     <ResizableWrapper width={item.width} height={item.height}>
       <div className="board-item-content">
@@ -100,5 +100,32 @@ const Item = React.memo(({ item, onSend }) => {
         </div>
       </div>
     </ResizableWrapper>
+  );
+});
+
+// Item component.
+const ColumnItem = React.memo(({ item }) => {
+  if (item.color === "hidden") {
+    item.height = 100;
+    item.width = 150;
+  }
+
+  return (
+    <div
+      className="item"
+      style={{ width: `${item.width}px`, height: `${item.height}px` }}
+    >
+      <div className="board-item-content">
+        <div className="card-remove">
+          <i className="material-icons" onMouseDown={item.onSend}>
+            add
+          </i>
+        </div>
+        <div className="frame-wrapper">
+          <img src={item.url} alt="" className="image" />
+          <img src={item.frameUrl} alt="frame" className="frame-overlay" />
+        </div>
+      </div>
+    </div>
   );
 });
