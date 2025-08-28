@@ -2,22 +2,14 @@ import React from "react";
 
 // Column component.
 export const Column = ({ children, actionClass, title }) => (
-  <div className={"board-column " + actionClass}>
-    <div className="board-column-header">{title}</div>
-    {children}
-  </div>
+  <div className={"board-column " + actionClass}>{children}</div>
 );
 export const Dashboard = ({ children, actionClass, title }) => (
-  <div className={"board-column " + actionClass}>
-    <div className="board-column-header">{title}</div>
-    {children}
-  </div>
+  <div className={"board-column " + actionClass}>{children}</div>
 );
 
 // Demo component.
-export const Demo = ({ children }) => (
-  <section className="grid-demo">{children}</section>
-);
+export const Demo = ({ children }) => <section>{children}</section>;
 
 // Header component.
 export const Header = () => (

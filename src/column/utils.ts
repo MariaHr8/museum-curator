@@ -66,11 +66,46 @@ export const columnOptions = {
   // the grids with the following groupId.
   dragSort: { groupId: "NOTES" },
   groupIds: ["NOTES"],
+  // containerClass: "board-column-content",
+  // dragEnabled: true,
+  // dragFixed: true,
+  // dragHandle: "frame-wrapper",
+  // dragSortHeuristics: {
+  //   sortInterval: 0,
+  // },
+  // dragContainer: document.body,
+  // dragPlaceholder: {
+  //   enabled: true,
+  //   createElement: function (item: any) {
+  //     // The element will have the Css class ".muuri-item-placeholder".
+  //     return item.getElement().cloneNode(true);
+  //   },
+  // },
+};
+
+export const dashboardOptions = {
+  // Enable to send the items in
+  // the grids with the following groupId.
+  dragSort: { groupId: "NOTES" },
+  groupIds: ["NOTES"],
   containerClass: "board-column-content",
-  dragEnabled: true,
-  dragFixed: true,
+  dragHandle: "frame-wrapper",
   dragSortHeuristics: {
-    sortInterval: 0,
+    sortInterval: 20,
   },
+  layoutDuration: 400,
+  dragRelease: {
+    duration: 400,
+    easing: "ease-out",
+  },
+  dragEnabled: true,
   dragContainer: document.body,
+  // The placeholder of an item that is being dragged.
+  dragPlaceholder: {
+    enabled: true,
+    createElement: function (item: any) {
+      // The element will have the Css class ".muuri-item-placeholder".
+      return item.getElement().cloneNode(true);
+    },
+  },
 };

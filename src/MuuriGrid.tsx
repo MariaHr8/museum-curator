@@ -56,13 +56,15 @@ const Item = ({ color, remove, url, frameUrl, height, width }) => (
   <ResizableWrapper width={width} height={height}>
     <div className={`content ${color}`}>
       <div className="card-remove">
-        <i className="material-icons" onMouseDown={remove}>
-          &#xE5CD;
-        </i>
-      </div>
-      <div className="frame-wrapper">
-        <img src={url} alt="" className="image" />
-        <img src={frameUrl} alt="frame" className="frame-overlay" />
+        <div>
+          <i className="material-icons" onMouseDown={remove}>
+            &#xE5CD;
+          </i>
+        </div>
+        <div className="frame-wrapper">
+          <img src={url} alt="" className="image" />
+          <img src={frameUrl} alt="frame" className="frame-overlay" />
+        </div>
       </div>
     </div>
   </ResizableWrapper>

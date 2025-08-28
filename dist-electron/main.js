@@ -22,6 +22,7 @@ function createWindow() {
     win.loadURL(VITE_DEV_SERVER_URL);
   } else {
     win.loadFile(path.join(RENDERER_DIST, "index.html"));
+    win.openDevTools();
   }
 }
 app.on("window-all-closed", () => {

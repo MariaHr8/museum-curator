@@ -8,12 +8,13 @@ import { boardOptions, columnOptions, getRandomWord, useSend } from "./utils";
 
 import "./columnStyle.css";
 import { generateItems } from "../utils";
+import { ResizableWrapper } from "../ResizableWrapper";
 
 export const Columns = () => {
   // Items state.
   const [items, setItems] = useState({
     active: generateItems(),
-    hidden: [],
+    hidden: [generateItems()[0]],
   });
 
   // UseSend is used when a item changes grid
@@ -22,13 +23,24 @@ export const Columns = () => {
 
   // Children.
   const children = {
-    active: items.active.map((item) => <Item item={item} key={item.id} />),
-    hidden: items.hidden.map((item) => <Item item={item} key={item.id} />),
+    active: items.active.map((item) => {
+      const item3 = {
+        ...item,
+        color: "active",
+      };
+      return <Item item={item3} key={item.id} />;
+    }),
+    hidden: items.hidden.map((item) => {
+      const item3 = {
+        ...item,
+        color: "hidden",
+      };
+      return <Item item={item3} key={item.id} />;
+    }),
   };
 
   return (
     <Demo>
-      {/* Columns container */}
       <MuuriComponent {...boardOptions}>
         {/* 'To do' column */}
         <Column actionClass="hidden" title="Hidden">
@@ -38,13 +50,18 @@ export const Columns = () => {
           </MuuriComponent>
         </Column>
         {/* 'Working' column */}
-        <Column actionClass="active" title="Active">
+        <Dashboard actionClass="active" title="Active">
           {/* Column content */}
-          <MuuriComponent id={"ACTIVE"} onSend={onSend} {...columnOptions}>
+          <MuuriComponent
+            id={"ACTIVE"}
+            dragEnabled
+            dragStartPredicate={{ handle: ".frame-wrapper" }}
+            onSend={onSend}
+            {...columnOptions}
+          >
             {children.active}
           </MuuriComponent>
-        </Column>
-        {/* 'Done' column */}
+        </Dashboard>
       </MuuriComponent>
     </Demo>
   );
@@ -57,12 +74,18 @@ const Item = React.memo(({ item }) => {
   const gridId = (grid?.id ?? "").toLowerCase(); // safe
 
   return (
-    <div className="board-item">
+    <ResizableWrapper width={item.width} height={item.height}>
       <div className="board-item-content">
-        <span>Item </span>
-        {`${item.id} - ${tag}`}
-        <div className={`tab-item ${gridId}-tab-item`} />
+        {/* <div className="card-remove">
+          <i className="material-icons" onMouseDown={item.remove}>
+            &#xE5CD;
+          </i>
+        </div> */}
+        <div className="frame-wrapper">
+          <img src={item.url} alt="" className="image" />
+          <img src={item.frameUrl} alt="frame" className="frame-overlay" />
+        </div>
       </div>
-    </div>
+    </ResizableWrapper>
   );
 });
