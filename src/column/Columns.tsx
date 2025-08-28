@@ -14,7 +14,7 @@ export const Columns = () => {
   // Items state.
   const [items, setItems] = useState({
     active: generateItems(),
-    hidden: [generateItems()[0]],
+    hidden: [],
   });
 
   // UseSend is used when a item changes grid
@@ -27,6 +27,12 @@ export const Columns = () => {
       const item3 = {
         ...item,
         color: "active",
+        onSend: () =>
+          onSend({
+            key: item.id.toString(),
+            fromId: "ACTIVE",
+            toId: "HIDDEN",
+          }),
       };
       return <Item item={item3} key={item.id} />;
     }),
@@ -34,6 +40,12 @@ export const Columns = () => {
       const item3 = {
         ...item,
         color: "hidden",
+        onSend: () =>
+          onSend({
+            key: item.id.toString(),
+            fromId: "HIDDEN",
+            toId: "ACTIVE",
+          }),
       };
       return <Item item={item3} key={item.id} />;
     }),
@@ -41,22 +53,22 @@ export const Columns = () => {
 
   return (
     <Demo>
-      <MuuriComponent {...boardOptions}>
-        {/* 'To do' column */}
+      <MuuriComponent key={items.active.length} {...boardOptions}>
         <Column actionClass="hidden" title="Hidden">
-          {/* Column content */}
-          <MuuriComponent id={"HIDDEN"} onSend={onSend} {...columnOptions}>
+          <MuuriComponent
+            key={items.hidden.length}
+            id={"HIDDEN"}
+            {...columnOptions}
+          >
             {children.hidden}
           </MuuriComponent>
         </Column>
-        {/* 'Working' column */}
         <Dashboard actionClass="active" title="Active">
-          {/* Column content */}
           <MuuriComponent
+            key={items.active.length}
             id={"ACTIVE"}
             dragEnabled
             dragStartPredicate={{ handle: ".frame-wrapper" }}
-            onSend={onSend}
             {...columnOptions}
           >
             {children.active}
@@ -68,19 +80,20 @@ export const Columns = () => {
 };
 
 // Item component.
-const Item = React.memo(({ item }) => {
+const Item = React.memo(({ item, onSend }) => {
   const [tag] = useState(getRandomWord());
   const grid = useGrid();
   const gridId = (grid?.id ?? "").toLowerCase(); // safe
 
+  console.log(item.onSend);
   return (
     <ResizableWrapper width={item.width} height={item.height}>
       <div className="board-item-content">
-        {/* <div className="card-remove">
-          <i className="material-icons" onMouseDown={item.remove}>
+        <div className="card-remove">
+          <i className="material-icons" onMouseDown={item.onSend}>
             &#xE5CD;
           </i>
-        </div> */}
+        </div>
         <div className="frame-wrapper">
           <img src={item.url} alt="" className="image" />
           <img src={item.frameUrl} alt="frame" className="frame-overlay" />

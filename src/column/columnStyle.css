@@ -310,6 +310,7 @@ section h4 {
 }
 
 .card-remove {
+    z-index:100;
     position: absolute;
     right: 0;
     top: 0;
@@ -332,7 +333,7 @@ section h4 {
     transition: all 0.15s ease-out;
 }
 
-.content:hover>.card-remove {
+.board-item-content:hover>.card-remove {
     -moz-transform: scale(1);
     -webkit-transform: scale(1);
     -o-transform: scale(1);

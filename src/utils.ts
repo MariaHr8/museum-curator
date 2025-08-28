@@ -1,6 +1,7 @@
 import frame1 from "./assets/frames/frame1.png";
 import frame3 from "./assets/frames/frame3.png";
 import frame4 from "./assets/frames/frame4.png";
+import frame5 from "./assets/frames/frame5.png";
 
 const BASE_WIDTH = 100;
 
@@ -39,7 +40,7 @@ export function generateItems() {
       BASE_WIDTH * 1.75,
     ]);
     const height = Math.round(width / picture.ratio);
-    const frameUrl = oneOf([frame1, frame3, frame4]);
+    const frameUrl = oneOf([frame1, frame3, frame4, frame5]);
 
     items.push({ id, color, url, frameUrl, height, width });
   }

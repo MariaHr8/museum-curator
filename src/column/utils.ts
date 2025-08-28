@@ -5,6 +5,7 @@ import { useCallback } from "react";
 export function useSend(
   setItems: React.Dispatch<React.SetStateAction<Record<string, any[]>>>
 ) {
+  console.log("onSend");
   return function onSend({
     key,
     fromId,
