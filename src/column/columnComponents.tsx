@@ -1,9 +1,12 @@
 import React from "react";
 
 // Column component.
-export const Column = ({ children, actionClass, title }) => (
-  <div className={"board-column " + actionClass}>{children}</div>
-);
+export const Column = ({ children, actionClass, title }) => {
+
+  return <div className={"board-column " + actionClass}>
+    {children}
+  </div>;
+};
 export const Dashboard = ({ children, actionClass, title }) => (
   <div className={"board-column " + actionClass}>{children}</div>
 );

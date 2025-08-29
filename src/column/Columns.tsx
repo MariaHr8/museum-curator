@@ -1,16 +1,17 @@
-/* React */
 import React, { useState } from "react";
-/* Muuri-react */
-import { MuuriComponent, useGrid } from "muuri-react";
-/* Utils & components */
-import { Column, Header, Demo, Dashboard } from "./columnComponents";
-import { boardOptions, columnOptions, getRandomWord, useSend } from "./utils";
+import { MuuriComponent } from "muuri-react";
+import { Column, Demo, Dashboard } from "./columnComponents";
+import { boardOptions, columnOptions, useSend } from "./utils";
 
 import "./columnStyle.css";
 import { generateItems } from "../utils";
 import { ResizableWrapper } from "../ResizableWrapper";
 
 export const Columns = () => {
+  const [hiddenItemsVisible, setHiddenItemsVisible] = useState<boolean>(false);
+
+  console.log(hiddenItemsVisible);
+
   // Items state.
   const [items, setItems] = useState({
     active: generateItems(),
@@ -53,28 +54,38 @@ export const Columns = () => {
 
   return (
     <Demo>
-      <MuuriComponent key={items.active.length} {...boardOptions}>
-        <Column actionClass="hidden" title="Hidden">
-          <MuuriComponent
-            key={items.hidden.length}
-            id={"HIDDEN"}
-            {...columnOptions}
-          >
-            {children.hidden}
-          </MuuriComponent>
-        </Column>
-        <Dashboard actionClass="active" title="Active">
-          <MuuriComponent
-            key={items.active.length}
-            id={"ACTIVE"}
-            dragEnabled
-            dragStartPredicate={{ handle: ".frame-wrapper" }}
-            {...columnOptions}
-          >
-            {children.active}
-          </MuuriComponent>
-        </Dashboard>
-      </MuuriComponent>
+      <button onClick={() => setHiddenItemsVisible(!hiddenItemsVisible)}>
+        Toggle Menu
+      </button>
+      <div className="board-layout">
+        {hiddenItemsVisible && (
+          <div className="side-menu">
+            <Column actionClass="hidden" title="Hidden">
+              <MuuriComponent
+                key={items.hidden.length}
+                id="HIDDEN"
+                {...columnOptions}
+              >
+                {children.hidden}
+              </MuuriComponent>
+            </Column>
+          </div>
+        )}
+
+        <div className="dashboard">
+          <Dashboard actionClass="active" title="Active">
+            <MuuriComponent
+              key={items.active.length}
+              id="ACTIVE"
+              dragEnabled
+              dragStartPredicate={{ handle: ".frame-wrapper" }}
+              {...columnOptions}
+            >
+              {children.active}
+            </MuuriComponent>
+          </Dashboard>
+        </div>
+      </div>
     </Demo>
   );
 };
