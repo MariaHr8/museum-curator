@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { MuuriComponent } from "muuri-react";
 import { generateItems } from "./utils";
-import { ResizableWrapper } from "./ResizableWrapper";
+import { ResizableWrapper } from "./components/ResizableWrapper";
 
 const MuuriGrid = () => {
   const [items, setItems] = useState(generateItems());

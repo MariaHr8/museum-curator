@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { MuuriComponent } from "muuri-react";
-import { Column, Demo, Dashboard, Header } from "./columnComponents";
-import { boardOptions, columnOptions, useSend } from "./utils";
 
-import "./columnStyle.css";
-import { generateItems } from "../utils";
-import { ResizableWrapper } from "../ResizableWrapper";
+import "./index.css";
+import { generateItems, useSend } from "./utils";
+import { ResizableWrapper } from "./components/ResizableWrapper";
+import { SideBar } from "./components/SideBar";
+import { Playboard } from "./components/MainContent";
 
 export const Columns = () => {
   const [hiddenItemsVisible, setHiddenItemsVisible] = useState<boolean>(true);
@@ -54,53 +53,16 @@ export const Columns = () => {
 
   return (
     <div className="board-layout">
-      <button
-        className="menu-button"
-        onClick={() => setHiddenItemsVisible(!hiddenItemsVisible)}
-      >
-        <svg
-          className="svg"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d={
-              hiddenItemsVisible
-                ? "M6 18L18 6M6 6l12 12"
-                : "M4 6h16M4 12h16M4 18h16"
-            }
-          />
-        </svg>
-      </button>
-      <div className={`sidebar ${hiddenItemsVisible ? "open" : ""}`}>
-        {/* Menu Items */}
-        <nav className="sidebar-nav">
-          <div className="hidden-items-container">
-            {children.hidden.map((item) => item)}
-          </div>
-        </nav>
-
-        {/* Menu Footer */}
-        <div className="sidebar-footer"> TODO </div>
-      </div>
-
-      <div className={`dashboard ${hiddenItemsVisible ? "open" : " "}`}>
-        <Dashboard actionClass="active" title="Active">
-          <MuuriComponent
-            key={items.active.length}
-            id="ACTIVE"
-            dragEnabled
-            dragStartPredicate={{ handle: ".frame-wrapper" }}
-            {...columnOptions}
-          >
-            {children.active}
-          </MuuriComponent>
-        </Dashboard>
-      </div>
+      <SideBar
+        isOpen={hiddenItemsVisible}
+        setIsOpen={setHiddenItemsVisible}
+        hiddenItems={children.hidden}
+      />
+      <Playboard
+        activeItems={children.active}
+        activeItemsLength={items.active.length}
+        sideBarIsOpen={hiddenItemsVisible}
+      />
     </div>
   );
 };

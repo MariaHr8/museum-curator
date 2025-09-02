@@ -1,4 +1,4 @@
-import { Columns } from "./column/Columns";
+import { Columns } from "./Columns";
 
 function App() {
   return <Columns />;

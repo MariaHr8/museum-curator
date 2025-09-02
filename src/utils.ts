@@ -45,29 +45,47 @@ export function generateItems() {
     items.push({ id, color, url, frameUrl, height, width });
   }
 
-  console.log("Item", items[0]);
-
   return items;
 }
 
-// Grid static options.
-export const options = {
-  dragSortHeuristics: {
-    sortInterval: 20,
-  },
-  layoutDuration: 400,
-  dragRelease: {
-    duration: 400,
-    easing: "ease-out",
-  },
-  dragEnabled: true,
-  dragContainer: document.body,
-  // The placeholder of an item that is being dragged.
-  dragPlaceholder: {
-    enabled: true,
-    createElement: function (item: any) {
-      // The element will have the Css class ".muuri-item-placeholder".
-      return item.getElement().cloneNode(true);
-    },
-  },
+// Return the 'onSend' method.
+// utils.ts
+export function useSend(
+  setItems: React.Dispatch<React.SetStateAction<Record<string, any[]>>>
+) {
+  console.log("onSend activated");
+  return function onSend({
+    key,
+    fromId,
+    toId,
+  }: {
+    key: string;
+    fromId: string;
+    toId: string;
+  }) {
+    const f = fromId.toLowerCase();
+    const t = toId.toLowerCase();
+
+    setItems((prev) => {
+      const next = { ...prev };
+      const fromArr = [...(next[f] ?? [])];
+
+      // Support items having either .key or .id
+      const idx = fromArr.findIndex(
+        (it) => String(it?.key ?? it?.id) === String(key)
+      );
+      if (idx === -1) return prev; // nothing to move
+
+      const [moved] = fromArr.splice(idx, 1);
+      next[f] = fromArr;
+      next[t] = [...(next[t] ?? []), moved];
+      return next;
+    });
+  };
+}
+
+// Column static options.
+export const columnOptions = {
+  dragSort: { groupId: "NOTES" },
+  groupIds: ["NOTES"],
 };
