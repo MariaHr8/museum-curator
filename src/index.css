@@ -63,12 +63,11 @@
   width: 70%;
   border-radius: 6px;
   z-index: 1;
-  margin: 10;
+  margin: 10px;
 }
 
 .board-column.hidden {
   background-color: antiquewhite;
-  margin-top: 5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,25 +83,19 @@
 .side-menu {
   z-index: 40;
   position: fixed;
-  /* so it stays on the side */
   top: 0;
   left: 0;
   width: 200px;
-  /* adjust as needed */
   height: 100vh;
-  /* full viewport height */
   background-color: #f3f3f3;
-  /* or any color */
   overflow-y: auto;
   transition: transform 0.3s ease-in-out;
   z-index: 40;
   transform: translateX(-100%);
-  /* hidden by default */
 }
 
 .side-menu.open {
   transform: translateX(0);
-  /* shown when open */
 }
 
 
@@ -110,17 +103,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 0;
   gap: 10px;
-
-  /* Ensure parent has height */
-  min-height: 100px;
-  /* optional */
+  /* min-height: 100px; */
 }
 
 .side-menu .item {
   position: relative;
-  /* already set correctly */
   width: 150px;
   height: 100px;
 }
@@ -342,7 +330,8 @@
   top: 0;
   left: 0;
   height: 100%;
-  /* width: 16rem; 64 (tailwind) */
+  max-width: 16rem; 
+  overflow: auto;
   background: #fff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transform: translateX(-100%);
@@ -356,22 +345,31 @@
   transform: translateX(0);
 }
 
-.sidebar-header {
-  padding: 1.5rem;
-  border-bottom: 1px solid #e5e7eb;
-  /* gray-200 */
+.sidebar h1 {
+  text-align: end;
+  word-wrap: break-word;
+  white-space: initial;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-top: 1.25rem;
+  margin-left: 1rem
 }
 
-.sidebar-header h2 {
+.sidebar h2 {
+  word-wrap: break-word;
+  white-space: initial;
   font-size: 1.25rem;
   font-weight: 600;
   color: #1f2937;
-  /* gray-800 */
+}
+
+.sidebar label {
+  color: #1f2937;
 }
 
 .sidebar-nav {
   overflow: auto;
-  margin-top: 5rem;
   padding-left: 3rem;
   padding-right: 3rem;
   flex: 1;
@@ -380,11 +378,11 @@
 .sidebar-footer {
   border-top: 1px solid #e5e7eb;
   padding: 1rem;
+  color: #a6a6a6;
 }
 
 .sidebar-nav .item {
   position: relative;
-  /* not absolute */
   margin: 0.5rem 0;
   width: 100px;
   height: 100px;
@@ -395,5 +393,4 @@
   position: relative;
   width: 100%;
   height: 100%;
-  /* margin-top: 3.5rem; */
 }

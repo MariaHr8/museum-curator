@@ -9,15 +9,28 @@ export const SideBar = ({ isOpen, setIsOpen, hiddenItems }) => {
         handleButtonPressed={handleButtonPressed}
       />
       <div className={`sidebar ${isOpen ? "open" : ""}`}>
-        {/* Menu Items */}
         <nav className="sidebar-nav">
+          <h1>Options</h1>
+          <h2>Hidden Items</h2>
           <div className="hidden-items-container">
             {hiddenItems.map((item) => item)}
           </div>
+
+          <h2>Mode</h2>
+          <input
+            type="radio"
+            id="framed"
+            name="mode"
+            value="framed"
+            defaultChecked
+          />
+          <label>Framed Art</label>
+          <br />
+          <input type="radio" id="posters" name="mode" value="posters" />
+          <label>Posters</label>
         </nav>
 
-        {/* Menu Footer */}
-        <div className="sidebar-footer"> TODO </div>
+        <div className="sidebar-footer"> by Maria Hristova </div>
       </div>
     </>
   );

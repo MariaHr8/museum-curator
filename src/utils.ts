@@ -53,7 +53,6 @@ export function generateItems() {
 export function useSend(
   setItems: React.Dispatch<React.SetStateAction<Record<string, any[]>>>
 ) {
-  console.log("onSend activated");
   return function onSend({
     key,
     fromId,

@@ -6,7 +6,7 @@ import { ResizableWrapper } from "./components/ResizableWrapper";
 import { SideBar } from "./components/SideBar";
 import { Playboard } from "./components/MainContent";
 
-export const Columns = () => {
+export const MainComponent = () => {
   const [hiddenItemsVisible, setHiddenItemsVisible] = useState<boolean>(true);
 
   // Items state.

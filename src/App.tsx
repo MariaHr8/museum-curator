@@ -1,7 +1,7 @@
-import { Columns } from "./Columns";
+import { MainComponent } from "./MainComponent";
 
 function App() {
-  return <Columns />;
+  return <MainComponent />;
 }
 
 export default App;
