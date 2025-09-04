@@ -1,7 +1,12 @@
+import { useDispatch } from "react-redux";
+import { hideFrames, showFrames } from "../pictureSlice";
+
 export const SideBar = ({ isOpen, setIsOpen, hiddenItems }) => {
   const handleButtonPressed = () => {
     setIsOpen(!isOpen);
   };
+  const dispatch = useDispatch();
+
   return (
     <>
       <SideBarButton
@@ -23,10 +28,17 @@ export const SideBar = ({ isOpen, setIsOpen, hiddenItems }) => {
             name="mode"
             value="framed"
             defaultChecked
+            onChange={() => dispatch(showFrames())}
           />
           <label>Framed Art</label>
           <br />
-          <input type="radio" id="posters" name="mode" value="posters" />
+          <input
+            type="radio"
+            id="posters"
+            name="mode"
+            value="posters"
+            onChange={() => dispatch(hideFrames())}
+          />
           <label>Posters</label>
         </nav>
 

@@ -5,6 +5,8 @@ import { generateItems, useSend } from "./utils";
 import { ResizableWrapper } from "./components/ResizableWrapper";
 import { SideBar } from "./components/SideBar";
 import { Playboard } from "./components/MainContent";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "./store";
 
 export const MainComponent = () => {
   const [hiddenItemsVisible, setHiddenItemsVisible] = useState<boolean>(true);
@@ -69,6 +71,10 @@ export const MainComponent = () => {
 
 // Item component.
 const Item = React.memo(({ item }) => {
+  const framesEnabled = useSelector(
+    (state: RootState) => state.picture.framesEnabled
+  );
+
   if (item.color === "hidden") {
     item.height = 100;
     item.width = 100;
@@ -84,7 +90,9 @@ const Item = React.memo(({ item }) => {
         </div>
         <div className="frame-wrapper">
           <img src={item.url} alt="" className="image" />
-          <img src={item.frameUrl} alt="frame" className="frame-overlay" />
+          {framesEnabled && (
+            <img src={item.frameUrl} alt="frame" className="frame-overlay" />
+          )}
         </div>
       </div>
     </ResizableWrapper>
@@ -93,6 +101,10 @@ const Item = React.memo(({ item }) => {
 
 // Item component.
 const ColumnItem = React.memo(({ item }) => {
+  const framesEnabled = useSelector(
+    (state: RootState) => state.picture.framesEnabled
+  );
+  
   item.height = 100;
   item.width = 150;
 
@@ -109,7 +121,9 @@ const ColumnItem = React.memo(({ item }) => {
         </div>
         <div className="frame-wrapper">
           <img src={item.url} alt="" className="image" />
-          <img src={item.frameUrl} alt="frame" className="frame-overlay" />
+          {framesEnabled && (
+            <img src={item.frameUrl} alt="frame" className="frame-overlay" />
+          )}
         </div>
       </div>
     </div>
