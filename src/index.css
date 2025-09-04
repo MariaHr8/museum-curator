@@ -79,68 +79,6 @@
   width: 100%;
 }
 
-/* Side menu */
-.side-menu {
-  z-index: 40;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200px;
-  height: 100vh;
-  background-color: #f3f3f3;
-  overflow-y: auto;
-  transition: transform 0.3s ease-in-out;
-  z-index: 40;
-  transform: translateX(-100%);
-}
-
-.side-menu.open {
-  transform: translateX(0);
-}
-
-
-.side-menu .hidden-items-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  /* min-height: 100px; */
-}
-
-.side-menu .item {
-  position: relative;
-  width: 150px;
-  height: 100px;
-}
-
-.menu-button {
-  position: fixed;
-  top: 1rem;
-  left: 0.5rem;
-  z-index: 50;
-  background-color: #2563eb;
-  color: white;
-  padding: 0.75rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-}
-
-.menu-button:hover {
-  background-color: #1d4ed8;
-}
-
-.menu-button[data-open="true"] {
-  left: 18rem;
-}
-
-.menu-button svg {
-  width: 24px;
-  height: 24px;
-}
-
-
 /* Dashboard (main area) */
 .dashboard {
   flex: 1;
@@ -332,7 +270,7 @@
   height: 100%;
   max-width: 16rem; 
   overflow: auto;
-  background: #fff;
+  background: #333333;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transform: translateX(-100%);
   transition: transform 0.3s ease-in-out;
@@ -346,14 +284,12 @@
 }
 
 .sidebar h1 {
-  text-align: end;
+  /* background-color: antiquewhite; */
   word-wrap: break-word;
   white-space: initial;
   font-size: 2rem;
   font-weight: 600;
-  color: #1f2937;
-  margin-top: 1.25rem;
-  margin-left: 1rem
+  color:#e5e7eb;
 }
 
 .sidebar h2 {
@@ -361,17 +297,18 @@
   white-space: initial;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #1f2937;
+  color: #e5e7eb;
 }
 
 .sidebar label {
-  color: #1f2937;
+  color: #e5e7eb;
 }
 
 .sidebar-nav {
   overflow: auto;
-  padding-left: 3rem;
-  padding-right: 3rem;
+  padding-left: 1rem;
+  padding-right: 5.2rem;
+  padding-top: 0rem;
   flex: 1;
 }
 
@@ -393,4 +330,48 @@
   position: relative;
   width: 100%;
   height: 100%;
+}
+
+/* Menu button  */
+.menu-button {
+  position: fixed;
+  top: 1.75rem;
+  left: 1rem;
+  z-index: 50;
+  background-color: #9c335300;
+  color: white;
+  padding: 0.5rem;
+  border: none;
+  /* border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05); */
+  transition: all 0.3s ease;
+}
+
+.menu-button:hover {
+  background-color: #7b3b63;
+}
+
+.menu-button[data-open="true"] {
+  left: 10rem;
+}
+
+.menu-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Sidebar Button Column */
+.sidebar-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: #7b3b63;
+}
+
+.sidebar-container{
+  display: flex;
+  height: 100%;
+  background-color: aqua;
 }

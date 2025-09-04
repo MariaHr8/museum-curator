@@ -38,7 +38,11 @@ export const SideBar = ({ isOpen, setIsOpen, hiddenItems }) => {
 
 export const SideBarButton = ({ isOpen, handleButtonPressed }) => {
   return (
-    <button className="menu-button" onClick={handleButtonPressed}>
+    <button
+      className="menu-button"
+      onClick={handleButtonPressed}
+      data-open={isOpen}
+    >
       <svg
         className="svg"
         fill="none"
@@ -49,7 +53,7 @@ export const SideBarButton = ({ isOpen, handleButtonPressed }) => {
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={2}
-          d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+          d={isOpen ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"}
         />
       </svg>
     </button>
