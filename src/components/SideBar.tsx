@@ -1,5 +1,10 @@
 import { useDispatch } from "react-redux";
-import { hideFrames, showFrames } from "../pictureSlice";
+import {
+  hideFrames,
+  setAutoArrangementOff,
+  setAutoArrangementOn,
+  showFrames,
+} from "../pictureSlice";
 
 export const SideBar = ({ isOpen, setIsOpen, hiddenItems }) => {
   const handleButtonPressed = () => {
@@ -21,7 +26,8 @@ export const SideBar = ({ isOpen, setIsOpen, hiddenItems }) => {
             {hiddenItems.map((item) => item)}
           </div>
 
-          <h2>Mode</h2>
+          {/* Picture Style */}
+          <h2>Picture Style</h2>
           <input
             type="radio"
             id="framed"
@@ -40,6 +46,27 @@ export const SideBar = ({ isOpen, setIsOpen, hiddenItems }) => {
             onChange={() => dispatch(hideFrames())}
           />
           <label>Posters</label>
+
+          {/* Arrangement */}
+          <h2>Arrangement</h2>
+          <input
+            type="radio"
+            id="grid"
+            name="arrangement"
+            value="grid"
+            defaultChecked
+            onChange={() => dispatch(setAutoArrangementOn())}
+          />
+          <label>Automatic</label>
+          <br />
+          <input
+            type="radio"
+            id="list"
+            name="arrangement"
+            value="list"
+            onChange={() => dispatch(setAutoArrangementOff())}
+          />
+          <label>Freeform</label>
         </nav>
 
         <div className="sidebar-footer"> by Maria Hristova </div>

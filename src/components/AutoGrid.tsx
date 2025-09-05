@@ -1,11 +1,7 @@
 import { MuuriComponent } from "muuri-react";
 import { columnOptions } from "../utils";
 
-export const Playboard = ({
-  activeItems,
-  activeItemsLength,
-  sideBarIsOpen,
-}) => {
+export const AutoGrid = ({ activeItems, activeItemsLength, sideBarIsOpen }) => {
   return (
     <div className={`dashboard ${sideBarIsOpen ? "open" : " "}`}>
       <div className={"board-column active"}>

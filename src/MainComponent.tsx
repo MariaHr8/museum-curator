@@ -4,11 +4,17 @@ import "./index.css";
 import { generateItems, useSend } from "./utils";
 import { ResizableWrapper } from "./components/ResizableWrapper";
 import { SideBar } from "./components/SideBar";
-import { Playboard } from "./components/MainContent";
-import { useDispatch, useSelector } from "react-redux";
+import { AutoGrid } from "./components/AutoGrid";
+import { useSelector } from "react-redux";
 import { RootState } from "./store";
+import { FreeformGrid } from "./components/FreeformGrid";
+import { ErrorBoundary } from "react-error-boundary";
 
 export const MainComponent = () => {
+  const autoGridEnabled = useSelector(
+    (state: RootState) => state.picture.autoGrid
+  );
+
   const [hiddenItemsVisible, setHiddenItemsVisible] = useState<boolean>(true);
 
   // Items state.
@@ -60,11 +66,18 @@ export const MainComponent = () => {
         setIsOpen={setHiddenItemsVisible}
         hiddenItems={children.hidden}
       />
-      <Playboard
-        activeItems={children.active}
-        activeItemsLength={items.active.length}
-        sideBarIsOpen={hiddenItemsVisible}
-      />
+      {autoGridEnabled ? (
+        <AutoGrid
+          activeItems={children.active}
+          activeItemsLength={items.active.length}
+          sideBarIsOpen={hiddenItemsVisible}
+        />
+      ) : (
+          <FreeformGrid
+            sideBarIsOpen={hiddenItemsVisible}
+            items={children.active}
+          />
+      )}
     </div>
   );
 };
@@ -75,13 +88,11 @@ const Item = React.memo(({ item }) => {
     (state: RootState) => state.picture.framesEnabled
   );
 
-  if (item.color === "hidden") {
-    item.height = 100;
-    item.width = 100;
-  }
+  const width = item.color === "hidden" ? 100 : item.width;
+  const height = item.color === "hidden" ? 100 : item.height;
 
   return (
-    <ResizableWrapper width={item.width} height={item.height}>
+    <ResizableWrapper width={width} height={height}>
       <div className="board-item-content">
         <div className="card-remove">
           <i className="material-icons" onMouseDown={item.onSend}>
@@ -104,14 +115,14 @@ const ColumnItem = React.memo(({ item }) => {
   const framesEnabled = useSelector(
     (state: RootState) => state.picture.framesEnabled
   );
-  
-  item.height = 100;
-  item.width = 150;
+
+  const height = 100;
+  const width = 150;
 
   return (
     <div
       className="item"
-      style={{ width: `${item.width}px`, height: `${item.height}px` }}
+      style={{ width: `${width}px`, height: `${height}px` }}
     >
       <div className="board-item-content">
         <div className="card-remove">

@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface PictureState {
   images: Array<{ id: string; url: string; frameUrl: string }>;
   framesEnabled: boolean;
+  autoGrid: boolean;
 }
 
 const initialState: PictureState = {
   images: [],
   framesEnabled: true,
+  autoGrid: true,
 };
 
 const pictureSlice = createSlice({
@@ -36,9 +38,24 @@ const pictureSlice = createSlice({
       console.log("Hiding frames");
       state.framesEnabled = false;
     },
+    setAutoArrangementOn: (state) => {
+      console.log("Setting arrangement to automatic");
+      state.autoGrid = true;
+    },
+    setAutoArrangementOff: (state) => {
+      console.log("Setting arrangement to freeform");
+      state.autoGrid = false;
+    },
   },
 });
 
-export const { addImage, removeImage, clearImages, showFrames, hideFrames } =
-  pictureSlice.actions;
+export const {
+  addImage,
+  removeImage,
+  clearImages,
+  showFrames,
+  hideFrames,
+  setAutoArrangementOff,
+  setAutoArrangementOn,
+} = pictureSlice.actions;
 export default pictureSlice.reducer;
