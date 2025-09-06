@@ -73,10 +73,10 @@ export const MainComponent = () => {
           sideBarIsOpen={hiddenItemsVisible}
         />
       ) : (
-          <FreeformGrid
-            sideBarIsOpen={hiddenItemsVisible}
-            items={children.active}
-          />
+        <FreeformGrid
+          activeItems={items.active}
+          sideBarIsOpen={hiddenItemsVisible}
+        />
       )}
     </div>
   );

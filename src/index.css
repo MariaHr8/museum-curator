@@ -163,8 +163,8 @@
 .item {
   display: flex;
   position: absolute;
-  width: 100px;
-  height: 100px;
+  /* width: 100px;
+  height: 100px; */
   line-height: 100px;
   margin: 10px;
   z-index: 1;
@@ -374,4 +374,14 @@
   display: flex;
   height: 100%;
   background-color: aqua;
+}
+
+.react-resizable-handle{
+
+}
+
+.react-resizable-handle-se{
+  bottom: 0;
+  right: 0;
+  cursor: se-resize;
 }
