@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
+    "html2canvas": "^1.4.1",
     "lodash": "^4.17.21",
     "muuri-react": "^3.1.7",
     "react": "^17.0.1",

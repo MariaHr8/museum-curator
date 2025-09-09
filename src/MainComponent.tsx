@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import "./index.css";
+import "./assets/index.css";
 import { generateItems, useSend } from "./utils";
 import { ResizableWrapper } from "./components/ResizableWrapper";
 import { SideBar } from "./components/SideBar";
 import { AutoGrid } from "./components/AutoGrid";
 import { useSelector } from "react-redux";
-import { RootState } from "./store";
 import { FreeformGrid } from "./components/FreeformGrid";
-import { ErrorBoundary } from "react-error-boundary";
+import { RootState } from "./redux/store";
+import { useExportAsImage } from "./hooks/useExportAsImage";
 
 export const MainComponent = () => {
+  const { exportRef, exportAsImage } = useExportAsImage("dashboard.png");
+
   const autoGridEnabled = useSelector(
     (state: RootState) => state.picture.autoGrid
   );
@@ -18,10 +20,25 @@ export const MainComponent = () => {
   const [hiddenItemsVisible, setHiddenItemsVisible] = useState<boolean>(true);
 
   // Items state.
-  const [items, setItems] = useState({
-    active: generateItems(),
+  const [items, setItems] = useState<{ active: any[]; hidden: any[] }>({
+    active: [],
     hidden: [],
   });
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      const activeItems = await generateItems();
+      console.log("here?");
+
+      setItems((prev) => ({
+        ...prev,
+        active: activeItems,
+      }));
+      console.log("Fetched items");
+      console.log(activeItems);
+    };
+    fetchItems();
+  }, []);
 
   // UseSend is used when a item changes grid
   // to sync the items state.
@@ -66,18 +83,22 @@ export const MainComponent = () => {
         setIsOpen={setHiddenItemsVisible}
         hiddenItems={children.hidden}
       />
+
       {autoGridEnabled ? (
         <AutoGrid
           activeItems={children.active}
           activeItemsLength={items.active.length}
           sideBarIsOpen={hiddenItemsVisible}
+          exportRef={exportRef}
         />
       ) : (
         <FreeformGrid
           activeItems={items.active}
           sideBarIsOpen={hiddenItemsVisible}
+          exportRef={exportRef}
         />
       )}
+      <button onClick={exportAsImage}>Export</button>
     </div>
   );
 };

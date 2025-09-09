@@ -1,14 +1,12 @@
 import Draggable from "react-draggable";
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
 import { ResizableBox } from "react-resizable";
-import { useRefresh } from "muuri-react";
-import { debounce } from "lodash";
+import { RootState } from "../redux/store";
 
-export const FreeformGrid = ({ activeItems, sideBarIsOpen }) => {
+export const FreeformGrid = ({ activeItems, sideBarIsOpen, exportRef }) => {
   return (
-    <div className={`dashboard ${sideBarIsOpen ? "open" : ""}`}>
+    <div className={`dashboard ${sideBarIsOpen ? "open" : ""}`} ref={exportRef}>
       <div className={"board-column active"}>
         {activeItems.map((item, index) => {
           const componentItem = {
@@ -60,9 +58,13 @@ export const DraggableItem = React.memo(({ item }) => {
               </i>
             </div>
             <div className="frame-wrapper">
-              <img src={item.url} className="image" />
+              <img src={item.url} className="image" draggable={false} />
               {framesEnabled && (
-                <img src={item.frameUrl} className="frame-overlay" />
+                <img
+                  src={item.frameUrl}
+                  className="frame-overlay"
+                  draggable={false}
+                />
               )}
             </div>
           </div>

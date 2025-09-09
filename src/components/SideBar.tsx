@@ -4,7 +4,7 @@ import {
   setAutoArrangementOff,
   setAutoArrangementOn,
   showFrames,
-} from "../pictureSlice";
+} from "../redux/pictureSlice";
 
 export const SideBar = ({ isOpen, setIsOpen, hiddenItems }) => {
   const handleButtonPressed = () => {

@@ -14,22 +14,19 @@ let uuid = 3;
 // Generate 3 items.
 export function generateItems() {
   const items = [];
+
   for (let i = 0; i < 7; i++) {
     const color = oneOf(["orange", "green", "blue"]);
     const id = uuid++;
 
     const picture = oneOf([
       {
-        url: "https://i.pinimg.com/400x300/0d/f6/f1/0df6f1f0bfe7aaca849c1bbc3607a34b.jpg",
-        ratio: 400 / 300,
+        url: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxOTc4MnwwfDF8cmFuZG9tfHx8fHx8fHx8MTc1NzQzNzIzOXw&ixlib=rb-4.1.0&q=80&w=1080",
+        ratio: 640 / 427,
       },
       {
-        url: "https://i.pinimg.com/600x/0d/f6/f1/0df6f1f0bfe7aaca849c1bbc3607a34b.jpg",
-        ratio: 800 / 600,
-      },
-      {
-        url: "https://i.pinimg.com/1200x/0d/f6/f1/0df6f1f0bfe7aaca849c1bbc3607a34b.jpg",
-        ratio: 1600 / 1200,
+        url: "https://images.unsplash.com/photo-1519455953755-af066f52f1a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxOTc4MnwwfDF8cmFuZG9tfHx8fHx8fHx8MTc1NzQzNzI3Mnw&ixlib=rb-4.1.0&q=80&w=1080",
+        ratio: 640 / 427,
       },
     ]);
     const url = picture.url;
