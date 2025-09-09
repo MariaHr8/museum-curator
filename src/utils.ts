@@ -16,7 +16,6 @@ export function generateItems() {
   const items = [];
 
   for (let i = 0; i < 7; i++) {
-    const color = oneOf(["orange", "green", "blue"]);
     const id = uuid++;
 
     const picture = oneOf([
@@ -26,6 +25,10 @@ export function generateItems() {
       },
       {
         url: "https://images.unsplash.com/photo-1519455953755-af066f52f1a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxOTc4MnwwfDF8cmFuZG9tfHx8fHx8fHx8MTc1NzQzNzI3Mnw&ixlib=rb-4.1.0&q=80&w=1080",
+        ratio: 640 / 427,
+      },
+      {
+        url: "https://images.unsplash.com/photo-1540206395-68808572332f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxOTc4MnwwfDF8cmFuZG9tfHx8fHx8fHx8MTc1NzQzNzkxNHw&ixlib=rb-4.1.0&q=80&w=1080",
         ratio: 640 / 427,
       },
     ]);
@@ -39,7 +42,7 @@ export function generateItems() {
     const height = Math.round(width / picture.ratio);
     const frameUrl = oneOf([frame1, frame3, frame4, frame5]);
 
-    items.push({ id, color, url, frameUrl, height, width });
+    items.push({ id, url, frameUrl, height, width });
   }
 
   return items;

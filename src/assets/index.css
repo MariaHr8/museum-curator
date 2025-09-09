@@ -22,8 +22,8 @@
 
 .react-resizable-handle {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   background-repeat: no-repeat;
   background-origin: content-box;
   box-sizing: border-box;
@@ -162,13 +162,22 @@
 
 .item {
   display: flex;
-  position: absolute;
+  /* position: absolute; */
   /* width: 100px;
   height: 100px; */
   line-height: 100px;
   margin: 10px;
   z-index: 1;
   will-change: transform;
+}
+
+.item:hover .react-resizable-handle {
+  display: none;
+}
+
+.item:hover .react-resizable-handle{
+  display:block;
+  z-index: 2000;
 }
 
 .item.muuri-item-positioning {
