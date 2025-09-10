@@ -67,6 +67,23 @@ export const DraggableItem = React.memo(({ item }) => {
                 />
               )}
             </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                flex: 1,
+                flexDirection: "row",
+                fontSize: 14,
+                color: "white",
+                lineHeight: "1em",
+                margin: "4px 2px 0px 2px",
+              }}
+            >
+              <span>By {item.author} on Unsplash</span>
+              <button onClick={() => window.open(item.link, "_blank")}>
+                URL
+              </button>
+            </div>
           </div>
         </ResizableBox>
       </div>

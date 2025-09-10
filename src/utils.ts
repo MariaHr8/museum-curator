@@ -1,9 +1,16 @@
+import { Random } from "unsplash-js/dist/methods/photos/types";
 import frame1 from "./assets/frames/frame1.png";
 import frame3 from "./assets/frames/frame3.png";
 import frame4 from "./assets/frames/frame4.png";
 import frame5 from "./assets/frames/frame5.png";
+// import { createApi } from "unsplash-js";
 
-const BASE_WIDTH = 100;
+const BASE_WIDTH = 150;
+
+// console.log(import.meta.env.VITE_ACCESS_KEY);
+// const unsplash = createApi({
+//   accessKey: import.meta.env.VITE_ACCESS_KEY || "",
+// });
 
 // Return one of the values of the array.
 export function oneOf(array: string | any[]) {
@@ -12,8 +19,18 @@ export function oneOf(array: string | any[]) {
 
 let uuid = 3;
 // Generate 3 items.
-export function generateItems() {
+export async function generateItems() {
   const items = [];
+
+  // const picturesResponse = await unsplash.photos.getRandom({
+  //   query: "art",
+  //   count: 7,
+  // });
+  // const pictures: Random[] = Array.isArray(picturesResponse.response)
+  //   ? picturesResponse.response
+  //   : picturesResponse.response
+  //   ? [picturesResponse.response]
+  //   : [];
 
   for (let i = 0; i < 7; i++) {
     const id = uuid++;
@@ -32,17 +49,24 @@ export function generateItems() {
         ratio: 640 / 427,
       },
     ]);
+
+    // const picture: Random = pictures[i];
+    const ratio = picture.ratio;
+    const author = "Maria";
     const url = picture.url;
+    const link =
+      "https://unsplash.com/photos/a-wind-chime-hanging-from-a-wire-with-a-bird-on-it-RpjBcVYeNIk";
+
     const width = oneOf([
       BASE_WIDTH,
       BASE_WIDTH * 1.25,
       BASE_WIDTH * 1.5,
       BASE_WIDTH * 1.75,
     ]);
-    const height = Math.round(width / picture.ratio);
+    const height = Math.round(width / ratio);
     const frameUrl = oneOf([frame1, frame3, frame4, frame5]);
 
-    items.push({ id, url, frameUrl, height, width });
+    items.push({ id, url, frameUrl, height, width, author, link });
   }
 
   return items;

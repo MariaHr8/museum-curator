@@ -28,14 +28,10 @@ export const MainComponent = () => {
   useEffect(() => {
     const fetchItems = async () => {
       const activeItems = await generateItems();
-      console.log("here?");
-
       setItems((prev) => ({
         ...prev,
         active: activeItems,
       }));
-      console.log("Fetched items");
-      console.log(activeItems);
     };
     fetchItems();
   }, []);
@@ -112,22 +108,42 @@ const Item = React.memo(({ item }) => {
   const width = item.color === "hidden" ? 100 : item.width;
   const height = item.color === "hidden" ? 100 : item.height;
 
+  console.log(item.author);
   return (
-    <ResizableWrapper width={width} height={height}>
-      <div className="board-item-content">
-        <div className="card-remove">
-          <i className="material-icons" onMouseDown={item.onSend}>
-            &#xE5CD;
-          </i>
+    <>
+      <ResizableWrapper width={width} height={height + 20}>
+        <div className="board-item-content">
+          <div className="card-remove">
+            <i className="material-icons" onMouseDown={item.onSend}>
+              &#xE5CD;
+            </i>
+          </div>
+          <div className="frame-wrapper">
+            <img src={item.url} alt="" className="image" />
+            {framesEnabled && (
+              <img src={item.frameUrl} alt="frame" className="frame-overlay" />
+            )}
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              flex: 1,
+              flexDirection: "row",
+              fontSize: 14,
+              color: "white",
+              lineHeight: "1em",
+              margin: "4px 2px 0px 2px",
+            }}
+          >
+            <span>By {item.author} on Unsplash</span>
+            <button onClick={() => window.open(item.link, "_blank")}>
+              URL
+            </button>
+          </div>
         </div>
-        <div className="frame-wrapper">
-          <img src={item.url} alt="" className="image" />
-          {framesEnabled && (
-            <img src={item.frameUrl} alt="frame" className="frame-overlay" />
-          )}
-        </div>
-      </div>
-    </ResizableWrapper>
+      </ResizableWrapper>
+    </>
   );
 });
 
@@ -143,7 +159,12 @@ const ColumnItem = React.memo(({ item }) => {
   return (
     <div
       className="item"
-      style={{ width: `${width}px`, height: `${height}px` }}
+      style={{
+        width: `${width}px`,
+        height: `${height}px`,
+        display: "flex",
+        flexDirection: "column",
+      }}
     >
       <div className="board-item-content">
         <div className="card-remove">
@@ -157,6 +178,21 @@ const ColumnItem = React.memo(({ item }) => {
             <img src={item.frameUrl} alt="frame" className="frame-overlay" />
           )}
         </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          flex: 1,
+          flexDirection: "row",
+          fontSize: 10,
+          color: "white",
+          lineHeight: "1em",
+          margin: "4px 2px 0px 2px",
+        }}
+      >
+        <span>By {item.author} on Unsplash</span>
+        <button onClick={() => window.open(item.link, "_blank")}>URL</button>
       </div>
     </div>
   );
