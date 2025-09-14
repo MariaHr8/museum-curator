@@ -31,19 +31,15 @@ const pictureSlice = createSlice({
       state.images = [];
     },
     showFrames: (state) => {
-      console.log("Showing frames");
       state.framesEnabled = true;
     },
     hideFrames: (state) => {
-      console.log("Hiding frames");
       state.framesEnabled = false;
     },
     setAutoArrangementOn: (state) => {
-      console.log("Setting arrangement to automatic");
       state.autoGrid = true;
     },
     setAutoArrangementOff: (state) => {
-      console.log("Setting arrangement to freeform");
       state.autoGrid = false;
     },
   },

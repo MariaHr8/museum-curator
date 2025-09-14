@@ -3,14 +3,13 @@ import frame1 from "./assets/frames/frame1.png";
 import frame3 from "./assets/frames/frame3.png";
 import frame4 from "./assets/frames/frame4.png";
 import frame5 from "./assets/frames/frame5.png";
-// import { createApi } from "unsplash-js";
+import { createApi } from "unsplash-js";
 
 const BASE_WIDTH = 150;
 
-// console.log(import.meta.env.VITE_ACCESS_KEY);
-// const unsplash = createApi({
-//   accessKey: import.meta.env.VITE_ACCESS_KEY || "",
-// });
+const unsplash = createApi({
+  accessKey: import.meta.env.VITE_ACCESS_KEY || "",
+});
 
 // Return one of the values of the array.
 export function oneOf(array: string | any[]) {
@@ -22,40 +21,43 @@ let uuid = 3;
 export async function generateItems() {
   const items = [];
 
-  // const picturesResponse = await unsplash.photos.getRandom({
-  //   query: "art",
-  //   count: 7,
-  // });
-  // const pictures: Random[] = Array.isArray(picturesResponse.response)
-  //   ? picturesResponse.response
-  //   : picturesResponse.response
-  //   ? [picturesResponse.response]
-  //   : [];
+  const picturesResponse = await unsplash.photos.getRandom({
+    query: "art",
+    count: 7,
+  });
+  const pictures: Random[] = Array.isArray(picturesResponse.response)
+    ? picturesResponse.response
+    : picturesResponse.response
+    ? [picturesResponse.response]
+    : [];
 
   for (let i = 0; i < 7; i++) {
     const id = uuid++;
 
-    const picture = oneOf([
-      {
-        url: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxOTc4MnwwfDF8cmFuZG9tfHx8fHx8fHx8MTc1NzQzNzIzOXw&ixlib=rb-4.1.0&q=80&w=1080",
-        ratio: 640 / 427,
-      },
-      {
-        url: "https://images.unsplash.com/photo-1519455953755-af066f52f1a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxOTc4MnwwfDF8cmFuZG9tfHx8fHx8fHx8MTc1NzQzNzI3Mnw&ixlib=rb-4.1.0&q=80&w=1080",
-        ratio: 640 / 427,
-      },
-      {
-        url: "https://images.unsplash.com/photo-1540206395-68808572332f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxOTc4MnwwfDF8cmFuZG9tfHx8fHx8fHx8MTc1NzQzNzkxNHw&ixlib=rb-4.1.0&q=80&w=1080",
-        ratio: 640 / 427,
-      },
-    ]);
+    // const picture = oneOf([
+    //   {
+    //     url: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxOTc4MnwwfDF8cmFuZG9tfHx8fHx8fHx8MTc1NzQzNzIzOXw&ixlib=rb-4.1.0&q=80&w=1080",
+    //     ratio: 640 / 427,
+    //   },
+    //   {
+    //     url: "https://images.unsplash.com/photo-1519455953755-af066f52f1a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxOTc4MnwwfDF8cmFuZG9tfHx8fHx8fHx8MTc1NzQzNzI3Mnw&ixlib=rb-4.1.0&q=80&w=1080",
+    //     ratio: 640 / 427,
+    //   },
+    //   {
+    //     url: "https://images.unsplash.com/photo-1540206395-68808572332f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxOTc4MnwwfDF8cmFuZG9tfHx8fHx8fHx8MTc1NzQzNzkxNHw&ixlib=rb-4.1.0&q=80&w=1080",
+    //     ratio: 640 / 427,
+    //   },
+    // ]);
 
     // const picture: Random = pictures[i];
-    const ratio = picture.ratio;
-    const author = "Maria";
-    const url = picture.url;
-    const link =
-      "https://unsplash.com/photos/a-wind-chime-hanging-from-a-wire-with-a-bird-on-it-RpjBcVYeNIk";
+
+    const picture = pictures[i];
+    const ratio = picture.width / picture.height;
+    const author = picture.user.name;
+    const authorLink = picture.user.links.html;
+
+    const url = picture.urls.regular;
+    const link = picture.links.html;
 
     const width = oneOf([
       BASE_WIDTH,
@@ -66,7 +68,7 @@ export async function generateItems() {
     const height = Math.round(width / ratio);
     const frameUrl = oneOf([frame1, frame3, frame4, frame5]);
 
-    items.push({ id, url, frameUrl, height, width, author, link });
+    items.push({ id, url, frameUrl, height, width, author, link, authorLink });
   }
 
   return items;

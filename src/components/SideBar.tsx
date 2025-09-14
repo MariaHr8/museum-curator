@@ -69,7 +69,16 @@ export const SideBar = ({ isOpen, setIsOpen, hiddenItems }) => {
           <label>Freeform</label>
         </nav>
 
-        <div className="sidebar-footer"> by Maria Hristova </div>
+        <div className="sidebar-footer">
+          {"by "}
+          <a
+            href="https://github.com/MariaHr8"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Maria Hristova
+          </a>
+        </div>
       </div>
     </>
   );

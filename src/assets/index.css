@@ -367,31 +367,36 @@
 }
 
 .menu-button svg {
-  width: 20px;
-  height: 20px;
-}
-
-/* Sidebar Button Column */
-.sidebar-button-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  background-color: #7b3b63;
-}
-
-.sidebar-container{
-  display: flex;
-  height: 100%;
-  background-color: aqua;
-}
-
-.react-resizable-handle{
-
+  width: 30px;
+  height: 30px;
 }
 
 .react-resizable-handle-se{
   bottom: 0;
   right: 0;
   cursor: se-resize;
+}
+
+/* Export Button */
+.export-button {
+  cursor: pointer;
+  position: fixed;
+  top: 1.75rem;
+  right: 1rem;
+  z-index: 50;
+  background-color: #9c335300;
+  color: white;
+  padding: 0.5rem;
+  border: none;
+  transition: all 0.3s ease;
+  background-color: #6a2e53;
+}
+
+.export-button:hover {
+  background-color: #8d4a73;
+}
+
+.export-button svg {
+  width: 30px;
+  height: 30px;
 }

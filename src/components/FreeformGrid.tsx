@@ -3,8 +3,14 @@ import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { ResizableBox } from "react-resizable";
 import { RootState } from "../redux/store";
+import { AuthorCredits } from "./AuthorCredits";
 
-export const FreeformGrid = ({ activeItems, sideBarIsOpen, exportRef }) => {
+export const FreeformGrid = ({
+  activeItems,
+  sideBarIsOpen,
+  exportRef,
+  onSend,
+}) => {
   return (
     <div className={`dashboard ${sideBarIsOpen ? "open" : ""}`} ref={exportRef}>
       <div className={"board-column active"}>
@@ -12,7 +18,12 @@ export const FreeformGrid = ({ activeItems, sideBarIsOpen, exportRef }) => {
           const componentItem = {
             ...item,
             color: "active",
-            onSend: () => console.log("Sending item from ACTIVE to HIDDEN"),
+            onSend: () =>
+              onSend({
+                key: item.id.toString(),
+                fromId: "ACTIVE",
+                toId: "HIDDEN",
+              }),
             zIndex: index,
           };
           return <DraggableItem item={componentItem} key={item.id} />;
@@ -22,11 +33,13 @@ export const FreeformGrid = ({ activeItems, sideBarIsOpen, exportRef }) => {
   );
 };
 
-// DraggableItem (only the relevant part)
 export const DraggableItem = React.memo(({ item }) => {
   const nodeRef = useRef<HTMLDivElement>(null);
   const framesEnabled = useSelector((s: RootState) => s.picture.framesEnabled);
-  const [size, setSize] = useState({ width: item.width, height: item.height });
+  const [size, setSize] = useState({
+    width: item.width,
+    height: item.height + 30,
+  });
 
   return (
     <Draggable
@@ -67,23 +80,7 @@ export const DraggableItem = React.memo(({ item }) => {
                 />
               )}
             </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                flex: 1,
-                flexDirection: "row",
-                fontSize: 14,
-                color: "white",
-                lineHeight: "1em",
-                margin: "4px 2px 0px 2px",
-              }}
-            >
-              <span>By {item.author} on Unsplash</span>
-              <button onClick={() => window.open(item.link, "_blank")}>
-                URL
-              </button>
-            </div>
+            <AuthorCredits item={item} />
           </div>
         </ResizableBox>
       </div>

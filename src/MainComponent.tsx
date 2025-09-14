@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import { FreeformGrid } from "./components/FreeformGrid";
 import { RootState } from "./redux/store";
 import { useExportAsImage } from "./hooks/useExportAsImage";
+import { AuthorCredits } from "./components/AuthorCredits";
+import { ExportButton } from "./components/ExportButton";
 
 export const MainComponent = () => {
   const { exportRef, exportAsImage } = useExportAsImage("dashboard.png");
@@ -60,12 +62,11 @@ export const MainComponent = () => {
         ...item,
         color: "hidden",
         onSend: () => {
-          console.log("Sending item from HIDDEN to ACTIVE"),
-            onSend({
-              key: item.id.toString(),
-              fromId: "HIDDEN",
-              toId: "ACTIVE",
-            });
+          onSend({
+            key: item.id.toString(),
+            fromId: "HIDDEN",
+            toId: "ACTIVE",
+          });
         },
       };
       return <ColumnItem item={item3} key={item.id} />;
@@ -92,9 +93,10 @@ export const MainComponent = () => {
           activeItems={items.active}
           sideBarIsOpen={hiddenItemsVisible}
           exportRef={exportRef}
+          onSend={onSend}
         />
       )}
-      <button onClick={exportAsImage}>Export</button>
+      <ExportButton handleExport={exportAsImage} />
     </div>
   );
 };
@@ -108,7 +110,6 @@ const Item = React.memo(({ item }) => {
   const width = item.color === "hidden" ? 100 : item.width;
   const height = item.color === "hidden" ? 100 : item.height;
 
-  console.log(item.author);
   return (
     <>
       <ResizableWrapper width={width} height={height + 20}>
@@ -124,23 +125,7 @@ const Item = React.memo(({ item }) => {
               <img src={item.frameUrl} alt="frame" className="frame-overlay" />
             )}
           </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              flex: 1,
-              flexDirection: "row",
-              fontSize: 14,
-              color: "white",
-              lineHeight: "1em",
-              margin: "4px 2px 0px 2px",
-            }}
-          >
-            <span>By {item.author} on Unsplash</span>
-            <button onClick={() => window.open(item.link, "_blank")}>
-              URL
-            </button>
-          </div>
+          <AuthorCredits item={item} />
         </div>
       </ResizableWrapper>
     </>
@@ -153,7 +138,7 @@ const ColumnItem = React.memo(({ item }) => {
     (state: RootState) => state.picture.framesEnabled
   );
 
-  const height = 100;
+  const height = 130;
   const width = 150;
 
   return (
@@ -179,21 +164,7 @@ const ColumnItem = React.memo(({ item }) => {
           )}
         </div>
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          flex: 1,
-          flexDirection: "row",
-          fontSize: 10,
-          color: "white",
-          lineHeight: "1em",
-          margin: "4px 2px 0px 2px",
-        }}
-      >
-        <span>By {item.author} on Unsplash</span>
-        <button onClick={() => window.open(item.link, "_blank")}>URL</button>
-      </div>
+      <AuthorCredits item={item} />
     </div>
   );
 });
