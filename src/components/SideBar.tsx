@@ -1,81 +1,83 @@
-import { useDispatch } from "react-redux";
-import {
-  hideFrames,
-  setAutoArrangementOff,
-  setAutoArrangementOn,
-  showFrames,
-} from "../redux/pictureSlice";
+import { useGalleryStore } from "../store";
+import { GalleryItem } from "./GalleryItem";
 
-export const SideBar = ({ isOpen, setIsOpen, hiddenItems }) => {
-  const handleButtonPressed = () => {
-    setIsOpen(!isOpen);
-  };
-  const dispatch = useDispatch();
+interface SideBarProps {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+}
+
+export const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
+  const { framesEnabled, toggleFrames, setAutoGrid, items, moveItem } = useGalleryStore();
 
   return (
     <>
-      <SideBarButton
-        isOpen={isOpen}
-        handleButtonPressed={handleButtonPressed}
-      />
+      <SideBarButton isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} />
       <div className={`sidebar ${isOpen ? "open" : ""}`}>
         <nav className="sidebar-nav">
           <h1>Options</h1>
+
           <h2>Hidden Items</h2>
           <div className="hidden-items-container">
-            {hiddenItems.map((item) => item)}
+            {items.hidden.map((item) => (
+              <div key={item.id} className="sidebar-item">
+                <GalleryItem
+                  item={item}
+                  variant="hidden"
+                  onSend={() => moveItem(item.id, "hidden", "active")}
+                />
+              </div>
+            ))}
           </div>
 
-          {/* Picture Style */}
           <h2>Picture Style</h2>
-          <input
-            type="radio"
-            id="framed"
-            name="mode"
-            value="framed"
-            defaultChecked
-            onChange={() => dispatch(showFrames())}
-          />
-          <label>Framed Art</label>
+          <label>
+            <input
+              type="radio"
+              name="mode"
+              value="framed"
+              defaultChecked={framesEnabled}
+              onChange={() => !framesEnabled && toggleFrames()}
+            />
+            Framed Art
+          </label>
           <br />
-          <input
-            type="radio"
-            id="posters"
-            name="mode"
-            value="posters"
-            onChange={() => dispatch(hideFrames())}
-          />
-          <label>Posters</label>
+          <label>
+            <input
+              type="radio"
+              name="mode"
+              value="posters"
+              defaultChecked={!framesEnabled}
+              onChange={() => framesEnabled && toggleFrames()}
+            />
+            Posters
+          </label>
 
-          {/* Arrangement */}
           <h2>Arrangement</h2>
-          <input
-            type="radio"
-            id="grid"
-            name="arrangement"
-            value="grid"
-            defaultChecked
-            onChange={() => dispatch(setAutoArrangementOn())}
-          />
-          <label>Automatic</label>
+          <label>
+            <input
+              type="radio"
+              name="arrangement"
+              value="grid"
+              defaultChecked
+              onChange={() => setAutoGrid(true)}
+            />
+            Automatic
+          </label>
           <br />
-          <input
-            type="radio"
-            id="list"
-            name="arrangement"
-            value="list"
-            onChange={() => dispatch(setAutoArrangementOff())}
-          />
-          <label>Freeform</label>
+          <label>
+            <input
+              type="radio"
+              name="arrangement"
+              value="list"
+              onChange={() => setAutoGrid(false)}
+            />
+            Freeform
+          </label>
         </nav>
 
         <div className="sidebar-footer">
           {"by "}
-          <a
-            href="https://github.com/MariaHr8"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="https://github.com/MariaHr8" target="_blank" rel="noopener noreferrer">
             Maria Hristova
           </a>
         </div>
@@ -84,26 +86,20 @@ export const SideBar = ({ isOpen, setIsOpen, hiddenItems }) => {
   );
 };
 
-export const SideBarButton = ({ isOpen, handleButtonPressed }) => {
-  return (
-    <button
-      className="menu-button"
-      onClick={handleButtonPressed}
-      data-open={isOpen}
-    >
-      <svg
-        className="svg"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d={isOpen ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"}
-        />
-      </svg>
-    </button>
-  );
-};
+interface SideBarButtonProps {
+  isOpen: boolean;
+  onToggle: () => void;
+}
+
+const SideBarButton = ({ isOpen, onToggle }: SideBarButtonProps) => (
+  <button className="menu-button" onClick={onToggle} data-open={isOpen}>
+    <svg className="svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d={isOpen ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"}
+      />
+    </svg>
+  </button>
+);

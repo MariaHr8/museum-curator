@@ -1,37 +1,26 @@
-import { debounce } from "lodash";
-import { useRefresh } from "muuri-react";
-import { useRef } from "react";
+import { ReactNode, useState } from "react";
 import { ResizableBox } from "react-resizable";
 
-// In ResizableWrapper.tsx
-export const ResizableWrapper = ({ width, height, children }) => {
-  const ref = useRef();
-  const refresh = useRefresh();
-  const refreshWithdebounce = debounce(
-    () => requestAnimationFrame(refresh),
-    50
-  );
+interface ResizableWrapperProps {
+  width: number;
+  height: number;
+  children: ReactNode;
+}
+
+export const ResizableWrapper = ({ width, height, children }: ResizableWrapperProps) => {
+  const [size, setSize] = useState({ width, height });
 
   return (
-    <div
-      ref={ref}
-      className="item"
-      style={{ width: `${width}px`, height: `${height}px` }}
-    >
-      <div className="muuri-item">
-        <ResizableBox
-          width={width}
-          height={height}
-          minConstraints={[width, height]}
-          onResize={(_, { size }) => {
-            ref.current.style.width = size.width + "px";
-            ref.current.style.height = size.height + "px";
-            refreshWithdebounce();
-          }}
-        >
-          {children}
-        </ResizableBox>
-      </div>
+    <div className="item" style={{ width: `${size.width}px`, height: `${size.height}px` }}>
+      <ResizableBox
+        width={size.width}
+        height={size.height}
+        minConstraints={[width, height]}
+        onResizeStop={(_, { size: newSize }) => setSize(newSize)}
+        resizeHandles={["se"]}
+      >
+        {children}
+      </ResizableBox>
     </div>
   );
 };
